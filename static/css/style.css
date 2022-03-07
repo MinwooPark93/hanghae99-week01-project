@@ -1,5 +1,9 @@
 @import url(reset.css);
 
+* {
+  font-family: 'Hi Melody', cursive;
+}
+
 .wrap {
 }
 
@@ -24,6 +28,46 @@ header {
   width: 50px;
   height: 50px;
   background-color: white;
+  margin-left: 20px;
+  text-align: center;
+  padding-top: 15px;
+  border-radius: 10px;
+}
+
+.nav-bar_second-box {
+  margin-right: 20px;
+}
+
+.mypage-center {
+  width: 60%;
+  height: 120px;
+
+  margin: 50px auto;
+  padding-top: 40px;
+  font-size: 50px;
+  text-align: center;
+}
+
+.mypage-nav {
+  margin: 20px 120px;
+}
+
+.mypage-nav_list {
+  height: 300px;
+  border: 2px solid darkgrey;
+  margin: 0px 100px;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.tab-my-write {
+  margin: 10px 20px;
+}
+
+.room-img {
+  height: 250px;
+  width: 250px;
+  border-radius: 10px;
 }
 
 .main {
