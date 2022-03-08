@@ -11,10 +11,10 @@
 
 * 2022년 3월 7일 ~ 2022년 3월 10일
 * 4인 1조 팀 프로젝트
- * 박민우: Login page - 로그인 기능 구현 JWT 사용
- * 김일권: Main page - 메인페이지 swiper 라이브러리 이용 슬라이더 기능 구현 & CSS
- * 천은호: My page - 마이페이지 내가 쓴 글 GET 기능 구현
- * 조병윤: Main page_modal - 메인페이지의 POST, GET 서버단과 프론트엔드 Ajax기능 구현
+>* 박민우: Login page - 로그인 기능 구현 JWT 사용
+>* 김일권: Main page - 메인페이지 swiper 라이브러리 이용 슬라이더 기능 구현 & CSS
+>* 천은호: My page - 마이페이지 내가 쓴 글 GET 기능 & Jinja2 Template Engine 사용 SSR(Server Side Rendering) 기능 구현
+>* 조병윤: Main page_modal - 메인페이지의 POST, GET 서버단과 프론트엔드 Ajax기능 구현
 
 --------------
 
@@ -61,14 +61,14 @@ deploy
 ## 5. 핵심기능
 
 * 로그인, 회원가입
- * JWT를 사용, 로그인과 회원가입 기능 구현
- * 아이디 중복확인이 가능하며, 정규식을 사용하여 특수문자와 최대글자수 구현
+>* JWT를 사용, 로그인과 회원가입 기능 구현
+>* 아이디 중복확인이 가능하며, 정규식을 사용하여 특수문자와 최대글자수 구현
 
 * 메인페이지 swiper, Image upload 기능 구현
- * Swiper 라이브러리 이용 Slide기능 & Image upload 기능 구현
+>* Swiper 라이브러리 이용 Slide기능 & Image upload 기능 구현
 
 * 마이페이지
- * Jinja2 Template Engine 사용 SSR(Server Side Rendering) 기능 구현
+>* Jinja2 Template Engine 사용 SSR(Server Side Rendering) 기능 구현
 
 --------------
 
