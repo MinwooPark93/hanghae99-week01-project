@@ -73,7 +73,7 @@
         listing();
     });
 
-    <!-- =====모달 JS===== -->
+    {#<!-- =====모달 JS===== -->#}
     const open = () => {
         document.querySelector(".modal").classList.remove("hidden");
     }
@@ -102,10 +102,10 @@
         /*파일 데이터가 있을경우 new FormData를 변수(form_data)에 대입하고 변수(form_data)를 input데이터를 append 해서 넣어줌*/
         form_data.append("file_give", file);
         form_data.append("content_give", content);
-        /*app.py /diary api로 데이터를 보내주고 받아옴*/
+        /*app.py /pictures api로 데이터를 보내주고 받아옴*/
         $.ajax({
             type: "POST",
-            url: "/diary",
+            url: "/pictures",
             data: form_data,
             cache: false,
             contentType: false,

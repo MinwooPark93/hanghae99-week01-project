@@ -1,12 +1,12 @@
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 from pymongo import MongoClient
-from datetime import datetime, timedelta
 import jwt
 import hashlib
 import certifi
 # import base64
 # import json
-from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
@@ -27,6 +27,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
+        print(payload)
         return render_template('index.html', user_info=user_info)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -40,18 +41,18 @@ def login():
     return render_template('login.html', msg=msg)
 
 
-@app.route('/user/<username>')
-def user(username):
-    # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
-
-        user_info = db.users.find_one({"username": username}, {"_id": False})
-        return render_template('user.html', user_info=user_info, status=status)
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+# @app.route('/user/<username>')
+# def user(username):
+#     # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
+#     token_receive = request.cookies.get('mytoken')
+#     try:
+#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+#         status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+#
+#         user_info = db.users.find_one({"username": username}, {"_id": False})
+#         return render_template('user.html', user_info=user_info, status=status)
+#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+#         return redirect(url_for("home"))
 
 
 @app.route('/sign_in', methods=['POST'])
@@ -145,40 +146,48 @@ def check_dup():
 # 병윤님 섹션 추가
 ######################################################################################
 
-@app.route('/diary', methods=['GET'])
-def show_diary():
-    diaries = list(db.diary.find({}, {'_id': False}))
+@app.route('/detail', methods=['GET'])
+def show_pictures():
+    diaries = list(db.pictures.find({}, {'_id': False}))
     # print(diaries)
     return render_template('index.html', diaries=diaries)
 
 
-@app.route('/diary', methods=['POST'])
-def save_diary():
-    # 데이터를 reviw.html에서 받아옴
-    content_receive = request.form['content_give']
+@app.route('/pictures', methods=['POST'])
+def save_pictures():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        # 데이터를 reviw.html에서 받아옴
+        content_receive = request.form['content_give']
 
-    file = request.files["file_give"]
-    # 확장자명 만듬
-    extension = file.filename.split('.')[-1]
+        file = request.files["file_give"]
+        # 확장자명 만듬
+        extension = file.filename.split('.')[-1]
 
-    # datetime 클래스로 현재 날짜와시간 만들어줌 -> 현재 시각을 출력하는 now() 메서드
-    today = datetime.datetime.now()
-    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+        # datetime 클래스로 현재 날짜와시간 만들어줌 -> 현재 시각을 출력하는 now() 메서드
+        today = datetime.now()
+        mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
 
-    filename = f'file-{mytime}'
-    # 파일에 시간붙여서 static폴더에 filename 으로 저장
-    save_to = f'static/{filename}.{extension}'
-    file.save(save_to)
+        filename = f'file-{mytime}'
+        # 파일에 시간붙여서 static폴더에 filename 으로 저장
+        save_to = f'static/{filename}.{extension}'
+        file.save(save_to)
 
-    doc = {
-        'content': content_receive,
-        'file': f'{filename}.{extension}',
-        'time': today.strftime('%Y.%m.%d')
-    }
-    # diary collection에 저장
-    db.diary.insert_one(doc)
+        doc = {
+            'username':user_info["username"],
+            'profile_name':user_info["profile_name"],
+            'content': content_receive,
+            'file': f'{filename}.{extension}',
+            'time': today.strftime('%Y.%m.%d')
+        }
+        # pictures collection에 저장
+        db.pictures.insert_one(doc)
 
-    return jsonify({'msg': '저장 완료!'})
+        return jsonify({'msg': '저장 완료!'})
+    except(jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 ######################################################################################
 
