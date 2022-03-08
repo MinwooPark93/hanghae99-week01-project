@@ -11,6 +11,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <title>Document</title>
+    <script>
+        $(document).ready(function () {
+            $('#logout_btn').click(function () {
+                $.removeCookie("mytoken", {path: '/'});
+                alert('로그아웃 되었습니다.')
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="wrap">
@@ -21,8 +29,8 @@
                 <a href="#">홈</a>
             </div>
             <div class="nav-bar_second-box">
-                <a href="/login">로그인</a>
-                <a href="#">마이페이지</a>
+                <a href="/login" id="logout_btn">로그아웃</a>
+                <a href="/#">마이페이지</a>
             </div>
         </div>
     </header>
@@ -118,6 +126,7 @@
     }
 
     {#<!-- =====DB에 완료===== -->#}
+
 </script>
 </body>
 </html>
