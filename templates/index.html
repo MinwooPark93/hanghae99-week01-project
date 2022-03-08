@@ -54,20 +54,30 @@
         <div class="modal hidden">
             <div class="bg"></div>
             <div class="modalBox">
+                <div class="modalBox-head">
+                    <span class="head-title">
+                        오서오'쉐어'
+                    </span>
+                </div>
                 <div class="input-group mb-3">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="file"/>
                         <label class="custom-file-label" for="file">사진 선택하기</label>
+                        <br>
+                        <input type="file" class="custom-file-input" id="file"/>
+                        </br>
                     </div>
                 </div>
                 <div class="form-floating">
               <textarea class="form-control" placeholder="Leave a comment here" id="content"
                         style="resize:none"></textarea>
                 </div>
-                <button onclick="saving()" type="button" class="btn btn-primary">
-                    저장하기
-                </button>
-                <button class="closeBtn">닫기</button>
+                <div class="btn-group">
+                    <button onclick="saving()" type="button" class="btn btn-primary btn-radius">
+                        저장하기
+                    </button>
+                    <button class="closeBtn btn-radius">닫기</button>
+                </div>
+
             </div>
         </div>
         <!-- =====모달 섹션 끝===== -->
