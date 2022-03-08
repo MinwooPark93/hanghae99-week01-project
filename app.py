@@ -1,8 +1,8 @@
 from pymongo import MongoClient
 from datetime import datetime, timedelta
 import jwt
-import datetime
 import hashlib
+import certifi
 # import base64
 # import json
 from flask import Flask, render_template, jsonify, request, redirect, url_for
@@ -15,8 +15,9 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'Hanghae99team10project'
 
+ca = certifi.where()
 
-client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority",tlsCAFile=ca)
 db = client.shareroom
 
 
@@ -144,8 +145,8 @@ def check_dup():
 # 병윤님 섹션 추가
 ######################################################################################
 
-@app.route('/detail', methods=['GET'])
-def show_detail():
+@app.route('/diary', methods=['GET'])
+def show_diary():
     diaries = list(db.diary.find({}, {'_id': False}))
     # print(diaries)
     return render_template('index.html', diaries=diaries)
@@ -183,5 +184,4 @@ def save_diary():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-
 
