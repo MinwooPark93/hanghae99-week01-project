@@ -16,10 +16,6 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'Hanghae99team10project'
 
 
-client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority")
-db = client.shareroom
-
-
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
