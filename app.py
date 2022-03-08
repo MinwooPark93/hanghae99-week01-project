@@ -23,12 +23,13 @@ db = client.shareroom
 
 @app.route('/')
 def home():
+    diaries = list(db.pictures.find({}, {'_id': False}))
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         print(payload)
-        return render_template('index.html', user_info=user_info)
+        return render_template('index.html', user_info=user_info, diaries=diaries)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -146,10 +147,25 @@ def check_dup():
 # 병윤님 섹션 추가
 ######################################################################################
 
-@app.route('/detail', methods=['GET'])
+@app.route('/pictures')
+def review_home():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 여기가 문제였군
+        return render_template('index.html', diaries = list(db.pictures.find({}, {'_id': False}))
+)
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", token_expired="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login"))
+
+
+@app.route('/pictures', methods=['GET'])
 def show_pictures():
     diaries = list(db.pictures.find({}, {'_id': False}))
-    # print(diaries)
+    print(diaries)
     return render_template('index.html', diaries=diaries)
 
 

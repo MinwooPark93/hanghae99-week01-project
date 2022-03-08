@@ -33,12 +33,22 @@
         <div>
             <button class="openBtn">내 방 자랑하기</button>
         </div>
-        <div class="picture-list">
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
+        <div class="picture-list" id="cards-box">
+            {% for pictures in diaries %}
+                <div class="card">
+                    <img class="card-img-top" src={{ url_for( 'static', filename = pictures.file) }}/>
+                    <div class="card-body">
+                        <p class="card-text">{{ pictures.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
+{#        <div class="picture-list">#}
+{#            <a href="#">1</a>#}
+{#            <a href="#">2</a>#}
+{#            <a href="#">3</a>#}
+{#            <a href="#">4</a>#}
+{#        </div>#}
         <!-- =====모달 섹션시작===== -->
 
         <div class="modal hidden">
@@ -57,6 +67,7 @@
                 <button onclick="saving()" type="button" class="btn btn-primary">
                     저장하기
                 </button>
+                <button class="closeBtn">닫기</button>
             </div>
         </div>
         <!-- =====모달 섹션 끝===== -->
@@ -92,6 +103,35 @@
     })
     {#<!-- =====모달 JS 끝===== -->#}
     {#<!-- =====DB에 저장===== -->#}
+
+
+    function listing() {
+        $.ajax({
+            type: "GET",
+            url: "/pictures",
+            data: {},
+            success: function (response) {
+                let diaries = response["diaries"];
+                console.log(response)
+                for (let i = 0; i < diaries.length; i++) {
+                    let content = diaries[i]["content"];
+                    let file = diaries[i]["file"];
+                    let time = diaries[i]["time"];
+
+                    let temp_html = `<div class="card">
+                                         <img src="../static/${file}" class="card-img-top border_radius">
+                                         <div class="card-body">
+                                             <p class="card-text">${content}</p>
+                                             <p class="save-date font_right">${time}</p>
+                                         </div>
+                                     </div>`;
+                    $("#cards-box").append(temp_html);
+                }
+            }
+        });
+    }
+
+
 
     function saving() {
         /*input 데이터 가져오기*/
