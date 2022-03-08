@@ -1,0 +1,29 @@
+.login_title {
+    width: 300px;
+    height: 15vh;
+    font-size: 60px;
+    font-family: 'Hi Melody', cursive;
+    color: #444444;
+    text-shadow: 0 0 3px  #96dfce;
+    margin: 40px auto 0 auto;
+}
+
+.section {
+    background-color: #96dfce;
+}
+
+.button.is-sparta {
+    background-color: #96dfce;
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.button.is-sparta.is-outlined {
+    background-color: transparent;
+    border-color: #96dfce;
+    color: #96dfce !important;
+}
+
+.help {
+    color: gray;
+}
