@@ -24,68 +24,68 @@
 
     <link rel="stylesheet" href="../static/css/style.css">
 
-    <title>마이 페이지</title>
+    <title>My Page | 어서오'쉐어'</title>
 
     <script>
         $(document).ready(function () {
-            singup()
 
+            {#나의 페이지 입장시 내 다이어리 활성화#}
+            show_diarys()
+
+            {#아이디에 따른 함수 호출#}
             $('a[data-toggle="pill"]').on('show.bs.tab', function (e) {
-                if(this.id == 'pills-home-tab')
-                    showroom()
-                else if(this.id == 'pills-profile-tab')
+                if(this.id == 'my_diary')
+                    show_diarys()
+                else if(this.id == 'my_like_diary')
                     like_list()
             });
         })
 
 
-
-        function showroom() {
-            $('#pills-home').empty()
-            $('#pills-profile').empty()
+        {#다이어리 보여주기#}
+        function show_diarys() {
+            {#그려진 다이어리 제거#}
+            $('#my_link').empty()
+            $('#list_link').empty()
 
             $.ajax({
                 type: "GET",
-                url: "/allrooms",
+                url: "/pictures",
                 data: {},
                 success: function (response) {
-                    let rooms = response['rooms'];
-                    for (let i=0;i<rooms.length; i++) {
-                        let title = rooms[i]['title']
-                        let img = rooms[i]['img']
+                    let rows = response['diaries']
 
-                        let temp_html = `<div class="tab-my-write col-md-2">
-                                            <img class="room-img" src="${img}">
-                                            <p class="room-title">${title}</p>
-                                        </div>`
+                    {#다이어리 전체 검색#}
+                    for (let i = 0; i < rows.length; i++) {
 
-                        $('#pills-home').append(temp_html)
+                        {#내가 쓴 글이면 추가#}
+                        if (document.getElementById("user_name").innerText == rows[i]['username']) {
+                            let img = rows[i]['file']
+                            let content = rows[i]['content']
+
+                            let temp_html = `<div class="tab-my-write col-md">
+                                        <img class="room-img" src="../static/${img}">
+                                        <p class="room-title">${content}</p>
+                                    </div>`
+
+                            $('#my_link').append(temp_html)
+                        }
                     }
                 }
             })
         }
 
+        {#좋아요 리스트#}
         function like_list() {
-            $('#pills-home').empty()
-            $('#pills-profile').empty()
+            $('#my_link').empty()
+            $('#list_link').empty()
 
             $.ajax({
                 type: "GET",
-                url: "/allrooms",
+                url: "/",
                 data: {},
                 success: function (response) {
-                    let rooms = response['rooms'];
-                    //for (let i=0;i<rooms.length; i++) {
-                        let title = rooms[0]['title']
-                        let img = rooms[0]['img']
-
-                        let temp_html = `<div class="tab-my-write col-md">
-                                            <img class="room-img" src="${img}">
-                                            <p class="room-title">${title}</p>
-                                        </div>`
-
-                        $('#pills-profile').append(temp_html)
-                    //}
+                    {#console.log(response)#}
                 }
             })
         }
@@ -112,25 +112,29 @@
         </header>
         <!-- 네비게이션 끝 -->
 
+{#        마이페이지 시작#}
         <div class="mypage-center">
-            {{ user_info.username }}님의 마이페이지
+            😏 <span id="user_name">{{ user_info['username'] }}</span>님의 마이페이지 🥰
         </div>
 
+{#        목록 버튼#}
         <ul class="mypage-nav nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
-                   aria-controls="pills-home" aria-selected="true">내가 쓴 글</a>
+                <a class="nav-link active" id="my_diary" data-toggle="pill" href="#my_link" role="tab"
+                   aria-controls="my_link" aria-selected="true">내가 쓴 글</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
-                   aria-controls="pills-profile" aria-selected="false">좋아요 리스트</a>
+                <a class="nav-link" id="my_like_diary" data-toggle="pill" href="#list_link" role="tab"
+                   aria-controls="list_link" aria-selected="false">좋아요 리스트</a>
             </li>
         </ul>
+{#        목록 내용#}
         <div class="mypage-nav_list" id="contents-list">
-            <div class="tab-pane row show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"></div>
-            <div class="tab-pane row" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"></div>
+            <div class="tab-pane row show active" id="my_link" role="tabpanel" aria-labelledby="my_diary"></div>
+            <div class="tab-pane row" id="list_link" role="tabpanel" aria-labelledby="my_like_diary"></div>
         </div>
     </div>
+{#    마이페이지 끝#}
 
     <script></script>
 </body>

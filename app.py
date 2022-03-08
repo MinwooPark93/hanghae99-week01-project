@@ -16,7 +16,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'Hanghae99team10project'
 
 
-client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority")
+client = MongoClient("")
 db = client.shareroom
 
 
@@ -188,6 +188,26 @@ def save_pictures():
     except(jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
+######################################################################################
+######################################################################################
+
+
+# mypage link-test
+@app.route('/mypage')
+def mypage():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.users.find_one({"username": payload["id"]})
+    return render_template('mypage.html', user_info=user_info)
+
+
+# mypage ajax-GET-/pictures
+@app.route('/pictures', methods=['GET'])
+def load_pictures():
+    diaries = list(db.pictures.find({}, {'_id': False}))
+    return jsonify({'diaries': diaries})
+
+######################################################################################
 ######################################################################################
 
 if __name__ == '__main__':
