@@ -23,6 +23,8 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <!-- 로그아웃 JS (JWT Remove cookie) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <!-- Bootstrap CSS -->
     <link
@@ -35,7 +37,15 @@
     <link rel="stylesheet" href="../static/css/style.css" />
 
     <title>My Page | 어서오'쉐어'</title>
-
+    <!-- 로그아웃 JS (JWT Remove cookie) -->
+    <script>
+        $(document).ready(function () {
+            $('#logout_btn').click(function () {
+                $.removeCookie("mytoken", {path: '/'});
+                alert('로그아웃 되었습니다.')
+            });
+        });
+    </script>
     <script>
       $(document).ready(function () {
 
@@ -60,11 +70,11 @@
 
           $.ajax({
               type: "GET",
-              url: "/pictures",
+              url: "/picturesToMypage",
               data: {},
               success: function (response) {
                   let rows = response['diaries']
-
+                  {#console.log(response)#}
                   {#다이어리 전체 검색#}
                   for (let i = 0; i < rows.length; i++) {
 
@@ -114,7 +124,7 @@
             <a href="/">홈</a>
           </div>
           <div class="nav-bar_second-box">
-            <a href="/">로그아웃</a>
+            <a href="/" id="logout_btn">로그아웃</a>
           </div>
         </div>
       </header>

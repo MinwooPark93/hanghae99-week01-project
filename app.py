@@ -219,7 +219,7 @@ def mypage():
 
 
 # mypage ajax-GET-/pictures
-@app.route('/pictures', methods=['GET'])
+@app.route('/picturesToMypage', methods=['GET'])
 def load_pictures():
     diaries = list(db.pictures.find({}, {'_id': False}))
     return jsonify({'diaries': diaries})
