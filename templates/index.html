@@ -13,6 +13,8 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Document</title>
     <script>
@@ -30,32 +32,37 @@
     <header>
         <div class="nav-bar">
             <div class="nav-bar_first-box">
-                <a href="/">홈</a>
+                <a href="/">어서오'쉐어'</a>
             </div>
             <div class="nav-bar_second-box">
+                <a href="/">홈</a>
                 <a href="/login" id="logout_btn">로그아웃</a>
                 <a href="/mypage">마이페이지</a>
             </div>
         </div>
     </header>
+    <div class="below_nav_image"><button class="openBtn top-btn">내 방 자랑하기</button></div>
     <!-- 네비게이션 끝 -->
     <!-- 메인 (슬라이드, 사진상위노출) -->
     <main class="main">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><a href="#"></a></div>
-                <div class="swiper-slide"><a href="#"></a></div>
-                <div class="swiper-slide"><a href="#"></a></div>
+        <div class="main-swiper-box">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><a href="#"></a></div>
+                    <div class="swiper-slide"><a href="#"></a></div>
+                    <div class="swiper-slide"><a href="#"></a></div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
             </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
         </div>
         <button class="openBtn">내 방 자랑하기</button>
-        <div class="picture-list" id="cards-box">
-            <div class="row">
+
+        <div class="mycards scroll-bar">
+            <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
                 {% for pictures in diaries %}
-                    <div class="card">
+                    <div class="card" style="width: 16rem;" >
                         <img class="card-img-top" src={{ url_for( 'static', filename = pictures.file) }}/>
                         <div class="card-body">
                             <p class="card-text">{{ pictures.content }}</p>
@@ -96,14 +103,6 @@
         <!-- =====모달 섹션 끝===== -->
     </main>
     <!-- 메인 (슬라이드, 사진상위노출) -->
-    <!-- footer copyright -->
-    <footer class="footer">
-        <p>
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-            <br>
-            이거 하나 하려다가 조원 다들 혈압올라 쓰러질뻔
-        </p>
-    </footer>    <!-- footer copyright 끝 -->
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 <script>

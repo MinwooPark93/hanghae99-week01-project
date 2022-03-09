@@ -1,0 +1,167 @@
+body {
+    overflow-x: hidden;
+}
+
+.wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 1200px;
+}
+
+.below_nav_image {
+    position: absolute;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 400px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../restaurant-g57ba34bf3_1920.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.top-btn {
+    position: absolute;
+    bottom: 50px;
+    left: 100px;
+    background-color: #ffd96a;
+    border: none;
+    transition: 0.2s ease-in-out;
+}
+.top-btn:hover {
+    transform: scale(1.05);
+}
+
+.main {
+    position: absolute;
+    top: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.slide {
+    width: 100%;
+    height: 300px;
+}
+
+.openBtn {
+    font-size: 20px;
+
+    border-radius: 10px;
+}
+
+.openBtn:hover {
+    background-color: #dbff6a;
+}
+
+.nav-button:hover {
+    background-color: red;
+    color: gold;
+}
+
+.main-swiper-box {
+    margin: 20px 0 40px 0;
+    width: 1200px;
+    height: 300px;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 40px;
+}
+
+.swiper-slide {
+    text-align: center;
+    margin-top: 10px;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    margin-top: 100px;
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+}
+
+/*.picture-list {*/
+/*    margin: auto;*/
+/*    max-width: 1200px;*/
+/*    display: flex;*/
+
+/*    flex-direction: row;*/
+/*    vertical-align: center;*/
+/*    position: relative;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*    justify-content: space-evenly;*/
+/*    overflow: auto;*/
+/*}*/
+.mycards {
+    margin: 20px auto 0px auto;
+    width: 100%;
+    max-width: 1200px;
+    overflow: auto;
+}
+
+.scroll-bar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+    background-color: #4c4c4c;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+}
+
+.card {
+    margin: auto;
+}
+
+.font_right {
+    text-align: right;
+}
+
+.border_radius {
+    border-radius: 30px 30px 0 0;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100vw;
+    height: 50px;
+
+    background-color: #666666;
+}

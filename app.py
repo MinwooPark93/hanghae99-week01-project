@@ -3,9 +3,7 @@ from pymongo import MongoClient
 import jwt
 import hashlib
 import certifi
-# import base64
-# import json
-from werkzeug.utils import secure_filename
+import os
 from datetime import datetime, timedelta
 
 
@@ -28,7 +26,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        print(payload)
+        # print(payload)
         return render_template('index.html', user_info=user_info, diaries=diaries)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -205,8 +203,14 @@ def save_pictures():
         return redirect(url_for("home"))
 
 ######################################################################################
+# 병윤님 섹션 끝
 ######################################################################################
 
+
+
+######################################################################################
+# 은호님 섹션 시작
+######################################################################################
 
 # mypage link-test
 @app.route('/mypage')
@@ -223,9 +227,27 @@ def load_pictures():
     diaries = list(db.pictures.find({}, {'_id': False}))
     return jsonify({'diaries': diaries})
 
+
+# mypage ajax-POST-/pictures-delete
+@app.route('/picturesToMypage', methods=['POST'])
+def del_pictures():
+    picture = request.form['picture_give']
+
+    picture_div = picture.split('/')
+
+    file = f'static/{picture_div[2]}'
+
+    os.remove(file)
+
+    # pictures = list(db.pictures.find({'file': a[2]}, {'_id': False}))
+    db.pictures.delete_one({'file': picture_div[2]})
+    # print(pictures)
+
+    return jsonify({'result': 'success'})
+
 ######################################################################################
+# 은호님 섹션 끝
 ######################################################################################
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-

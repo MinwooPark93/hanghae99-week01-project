@@ -1,0 +1,30 @@
+.mypage-center {
+  width: 60%;
+  height: 120px;
+
+  margin: 50px auto;
+  padding-top: 40px;
+  font-size: 50px;
+  text-align: center;
+}
+
+.mypage-nav {
+  margin: 20px 120px;
+}
+
+.mypage-nav_list {
+  border: 2px solid darkgrey;
+  margin: 0px 100px;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.tab-my-write {
+  margin: 10px 20px;
+}
+
+.room-img {
+  height: 250px;
+  width: 250px;
+  border-radius: 10px;
+}
