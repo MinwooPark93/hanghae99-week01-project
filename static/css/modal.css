@@ -35,13 +35,22 @@
 
 .modalBox-head{
   width: 100%;
-  height: 50px;
+  height: 50%;
+  max-height:20%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: xx-large;
   border-bottom: 3px solid white;
   margin-bottom: 10px;
+}
+
+.modalBox-body{
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-group {
