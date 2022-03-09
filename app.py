@@ -206,6 +206,26 @@ def save_pictures():
         return redirect(url_for("home"))
 
 ######################################################################################
+######################################################################################
+
+
+# mypage link-test
+@app.route('/mypage')
+def mypage():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.users.find_one({"username": payload["id"]})
+    return render_template('mypage.html', user_info=user_info)
+
+
+# mypage ajax-GET-/pictures
+@app.route('/pictures', methods=['GET'])
+def load_pictures():
+    diaries = list(db.pictures.find({}, {'_id': False}))
+    return jsonify({'diaries': diaries})
+
+######################################################################################
+######################################################################################
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
