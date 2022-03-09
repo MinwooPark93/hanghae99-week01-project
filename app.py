@@ -35,7 +35,6 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
-
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
@@ -162,10 +161,22 @@ def review_home():
         return redirect(url_for("login"))
 
 
-@app.route('/pictures', methods=['GET'])
-def show_pictures():
-    diaries = list(db.pictures.find({}, {'_id': False}))
-    return render_template('index.html', diaries=diaries)
+# @app.route('/pictures', methods=['GET'])
+# def show_pictures():
+#     diaries = list(db.pictures.find({}, {'_id': False}))
+#     return render_template('index.html', diaries=diaries)
+
+# @app.route('/pictures', methods=['GET'])
+# def show_pictures():
+#     token_receive = request.cookies.get('mytoken')
+#     try:
+#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+#         posts = list(db.pictures.find({}).sort("date",1).limit(12))
+#         for posts in posts:
+#             posts["_id"] = str(posts["_id"])
+#         return jsonify({"result": "success", "msg":"포스팅을 가져왔습니다", "posts":posts})
+#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+#         return redirect(url_for("home"))
 
 
 @app.route('/pictures', methods=['POST'])
@@ -184,6 +195,7 @@ def save_pictures():
         # datetime 클래스로 현재 날짜와시간 만들어줌 -> 현재 시각을 출력하는 now() 메서드
         today = datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+        count = len(user_info)
 
         filename = f'file-{mytime}'
         # 파일에 시간붙여서 static폴더에 filename 으로 저장
@@ -195,11 +207,12 @@ def save_pictures():
             'profile_name':user_info["profile_name"],
             'content': content_receive,
             'file': f'{filename}.{extension}',
-            'time': today.strftime('%Y.%m.%d')
+            'time': today.strftime('%Y.%m.%d'),
+            'num': count
         }
         # pictures collection에 저장
         db.pictures.insert_one(doc)
-
+        print(doc)
         return jsonify({'msg': '저장 완료!'})
     except(jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))

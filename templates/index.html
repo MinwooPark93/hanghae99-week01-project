@@ -56,9 +56,11 @@
             <div class="row">
                 {% for pictures in diaries %}
                     <div class="card">
-                        <img class="card-img-top" src={{ url_for( 'static', filename = pictures.file) }}/>
+                        <button type="button" class="btn_image" id="img_btn">
+                            <img class="card-img-top" src={{ url_for( 'static', filename = pictures.file) }}/>
+                        </button>
                         <div class="card-body">
-                            <p class="card-text">{{ pictures.content }}</p>
+{#                            <p class="card-text">{{ pictures.content }}</p>#}
                         </div>
                     </div>
                 {% endfor %}
@@ -71,7 +73,7 @@
             <div class="modalBox">
                 <div class="modalBox-head">
                     <span class="head-title">
-                        오서오'쉐어'
+                        어서오'쉐어'
                     </span>
                 </div>
 
@@ -94,6 +96,31 @@
             </div>
         </div>
         <!-- =====모달 섹션 끝===== -->
+        <!-- =====모달 읽기 섹션===== -->
+        <div class="modal_wr hidden">
+            <div class="bg_wr"></div>
+            <div class="modalBox_wr">
+{#                <div class="picture-list" id="cards-box">#}
+{#                <div class="row">#}
+                {% for pictures in diaries %}
+                    {% if loop.index == 1 %}
+                        <div class="card">
+                            <img class="card-img-top_wr"
+                                 src={{ url_for( 'static', filename = pictures.file) }}/>
+                            <div class="card-body_wr">
+                                <p class="card-text">{{ pictures.content }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <button class="closeBtn_wr btn-radius">
+                    닫기
+                </button>
+            </div>
+        </div>
+
+
+        <!-- =====모달 읽기 섹션 끝===== -->
     </main>
     <!-- 메인 (슬라이드, 사진상위노출) -->
     <!-- footer copyright -->
@@ -121,10 +148,26 @@
         document.querySelector(".modal").classList.add("hidden");
     }
 
+
     document.querySelector(".openBtn").addEventListener("click", open);
     document.querySelector(".closeBtn").addEventListener("click", close);
     document.querySelector(".bg").addEventListener("click", close);
     // =====모달 JS 끝=====
+
+    // =====모달 읽기 JS =====
+    const open_wr = () => {
+        document.querySelector(".modal_wr").classList.remove("hidden");
+    }
+
+    const close_wr = () => {
+        document.querySelector(".modal_wr").classList.add("hidden");
+    }
+
+
+    document.querySelector(".btn_image").addEventListener("click", open_wr);
+    document.querySelector(".closeBtn_wr").addEventListener("click", close_wr);
+    document.querySelector(".bg_wr").addEventListener("click", close_wr);
+    // =====모달 읽기 JS 끝=====
     // =====DB에 저장=====
 
 
