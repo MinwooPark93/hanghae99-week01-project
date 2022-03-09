@@ -107,12 +107,12 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 <script>
-    $(document).ready(function () {
-        bsCustomFileInput.init();
-        listing();
-    });
+    // $(document).ready(function () {
+    //     bsCustomFileInput.init();
+    //     listing();
+    // });
 
-    {#<!-- =====모달 JS===== -->#}
+    // =====모달 JS=====
     const open = () => {
         document.querySelector(".modal").classList.remove("hidden");
     }
@@ -124,40 +124,38 @@
     document.querySelector(".openBtn").addEventListener("click", open);
     document.querySelector(".closeBtn").addEventListener("click", close);
     document.querySelector(".bg").addEventListener("click", close);
-    document.querySelector("#sendButton").addEventListener('click', () => {
-        {#let selectFile = document.querySelector("#inputImage").files[0];#}
-        {#const file = URL.createObjectURL(selectFile);#}
-        {#document.querySelector(".uploadImage").src = file;#}
-    })
-    {#<!-- =====모달 JS 끝===== -->#}
-    {#<!-- =====DB에 저장===== -->#}
+    // =====모달 JS 끝=====
+    // =====DB에 저장=====
 
 
-    function listing() {
-        $.ajax({
-            type: "GET",
-            url: "/pictures",
-            data: {},
-            success: function (response) {
-                let diaries = response["diaries"];
-                console.log(response)
-                for (let i = 0; i < diaries.length; i++) {
-                    let content = diaries[i]["content"];
-                    let file = diaries[i]["file"];
-                    let time = diaries[i]["time"];
+    // *** Trouble shooting - Jinja2 Template Engine을 이용하여
+    // Server Side Rendering을 구현함에 있어 불필요한 코드였지만 For문 연습 한 내용을 주석처리
 
-                    let temp_html = `<div class="card">
-                                         <img src="../static/${file}" class="card-img-top border_radius">
-                                         <div class="card-body">
-                                             <p class="card-text">${content}</p>
-                                             <p class="save-date font_right">${time}</p>
-                                         </div>
-                                     </div>`;
-                    $("#cards-box").append(temp_html);
-                }
-            }
-        });
-    }
+    // function listing() {
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "/pictures",
+    //         data: {},
+    //         success: function (response) {
+    //             let diaries = response["diaries"];
+    //             console.log(response)
+    //             for (let i = 0; i < diaries.length; i++) {
+    //                 let content = diaries[i]["content"];
+    //                 let file = diaries[i]["file"];
+    //                 let time = diaries[i]["time"];
+    //
+    //                 let temp_html = `<div class="card">
+    //                                      <img src="../static/${file}" class="card-img-top border_radius">
+    //                                      <div class="card-body">
+    //                                          <p class="card-text">${content}</p>
+    //                                          <p class="save-date font_right">${time}</p>
+    //                                      </div>
+    //                                  </div>`;
+    //                 $("#cards-box").append(temp_html);
+    //             }
+    //         }
+    //     });
+    // }
 
 
     function saving() {
@@ -184,7 +182,7 @@
         });
     }
 
-    {#<!-- =====DB에 완료===== -->#}
+    // =====DB에 완료=====
 
 </script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

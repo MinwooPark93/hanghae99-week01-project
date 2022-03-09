@@ -165,7 +165,6 @@ def review_home():
 @app.route('/pictures', methods=['GET'])
 def show_pictures():
     diaries = list(db.pictures.find({}, {'_id': False}))
-    print(diaries)
     return render_template('index.html', diaries=diaries)
 
 
