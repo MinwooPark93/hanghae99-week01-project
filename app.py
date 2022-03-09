@@ -3,7 +3,10 @@ from pymongo import MongoClient
 import jwt
 import hashlib
 import certifi
-
+import os
+# import base64
+# import json
+from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
 
@@ -219,6 +222,24 @@ def mypage():
 def load_pictures():
     diaries = list(db.pictures.find({}, {'_id': False}))
     return jsonify({'diaries': diaries})
+
+
+# mypage ajax-POST-/pictures-delete
+@app.route('/picturesToMypage', methods=['POST'])
+def del_pictures():
+    picture = request.form['picture_give']
+
+    picture_div = picture.split('/')
+
+    file = f'static/{picture_div[2]}'
+
+    os.remove(file)
+
+    # pictures = list(db.pictures.find({'file': a[2]}, {'_id': False}))
+    db.pictures.delete_one({'file': picture_div[2]})
+    # print(pictures)
+
+    return jsonify({'result': 'success'})
 
 ######################################################################################
 ######################################################################################
