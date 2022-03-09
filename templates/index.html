@@ -26,6 +26,7 @@
             </div>
         </div>
     </header>
+</div>
     <!-- 네비게이션 끝 -->
     <!-- 메인 (슬라이드, 사진상위노출) -->
     <main class="main">
@@ -59,23 +60,28 @@
                         오서오'쉐어'
                     </span>
                 </div>
-                <div class="modalBox-body"
+                <div class="modalBox-body">
+                    <br>
                     <div class="input-group mb-3">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="file"/>
                         </div>
                     </div>
+                    </br>
+                    <br>
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Leave a comment here" id="content"
-                        style="resize:none"></textarea>
+                                  style="resize:none"></textarea>
+                    </div>
+                    </br>
+                    <div class="btn-group">
+                        <button onclick="saving()" type="button" class="btn btn-primary btn-radius">
+                            저장하기
+                        </button>
+                        <button class="closeBtn btn-radius">닫기</button>
                     </div>
                 </div>
-                <div class="btn-group">
-                    <button onclick="saving()" type="button" class="btn btn-primary btn-radius">
-                        저장하기
-                    </button>
-                    <button class="closeBtn btn-radius">닫기</button>
-                </div>
+            </div>
         </div>
         <!-- =====모달 섹션 끝===== -->
     </main>
@@ -83,88 +89,86 @@
     <!-- footer copyright -->
     <footer class="footer">copyright</footer>
     <!-- footer copyright 끝 -->
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
-<script>
-    $(document).ready(function () {
-        bsCustomFileInput.init();
-        listing();
-    });
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+    <script>
+        $(document).ready(function () {
+            bsCustomFileInput.init();
+            listing();
+        });
 
-    {#<!-- =====모달 JS===== -->#}
-    const open = () => {
-        document.querySelector(".modal").classList.remove("hidden");
-    }
+        {#<!-- =====모달 JS===== -->#}
+        const open = () => {
+            document.querySelector(".modal").classList.remove("hidden");
+        }
 
-    const close = () => {
-        document.querySelector(".modal").classList.add("hidden");
-    }
+        const close = () => {
+            document.querySelector(".modal").classList.add("hidden");
+        }
 
-    document.querySelector(".openBtn").addEventListener("click", open);
-    document.querySelector(".closeBtn").addEventListener("click", close);
-    document.querySelector(".bg").addEventListener("click", close);
-    document.querySelector("#sendButton").addEventListener('click', () => {
-        {#let selectFile = document.querySelector("#inputImage").files[0];#}
-        {#const file = URL.createObjectURL(selectFile);#}
-        {#document.querySelector(".uploadImage").src = file;#}
-    })
-    {#<!-- =====모달 JS 끝===== -->#}
-    {#<!-- =====DB에 저장===== -->#}
+        document.querySelector(".openBtn").addEventListener("click", open);
+        document.querySelector(".closeBtn").addEventListener("click", close);
+        document.querySelector(".bg").addEventListener("click", close);
+        document.querySelector("#sendButton").addEventListener('click', () => {
+            {#let selectFile = document.querySelector("#inputImage").files[0];#}
+            {#const file = URL.createObjectURL(selectFile);#}
+            {#document.querySelector(".uploadImage").src = file;#}
+        })
+        {#<!-- =====모달 JS 끝===== -->#}
+        {#<!-- =====DB에 저장===== -->#}
 
 
-    function listing() {
-        $.ajax({
-            type: "GET",
-            url: "/pictures",
-            data: {},
-            success: function (response) {
-                let diaries = response["diaries"];
-                console.log(response)
-                for (let i = 0; i < diaries.length; i++) {
-                    let content = diaries[i]["content"];
-                    let file = diaries[i]["file"];
-                    let time = diaries[i]["time"];
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "/pictures",
+                data: {},
+                success: function (response) {
+                    let diaries = response["diaries"];
+                    console.log(response)
+                    for (let i = 0; i < diaries.length; i++) {
+                        let content = diaries[i]["content"];
+                        let file = diaries[i]["file"];
+                        let time = diaries[i]["time"];
 
-                    let temp_html = `<div class="card">
+                        let temp_html = `<div class="card">
                                          <img src="../static/${file}" class="card-img-top border_radius">
                                          <div class="card-body">
                                              <p class="card-text">${content}</p>
                                              <p class="save-date font_right">${time}</p>
                                          </div>
                                      </div>`;
-                    $("#cards-box").append(temp_html);
+                        $("#cards-box").append(temp_html);
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
 
 
+        function saving() {
+            /*input 데이터 가져오기*/
+            let content = $("#content").val();
+            /*$("#file")[0]->input태그*/ /*.files -> length(갯수)*/
+            let file = $("#file")[0].files[0];
+            let form_data = new FormData();
+            /*파일 데이터가 있을경우 new FormData를 변수(form_data)에 대입하고 변수(form_data)를 input데이터를 append 해서 넣어줌*/
+            form_data.append("file_give", file);
+            form_data.append("content_give", content);
+            /*app.py /pictures api로 데이터를 보내주고 받아옴*/
+            $.ajax({
+                type: "POST",
+                url: "/pictures",
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    alert(response['msg']);
+                    window.location.reload();
+                },
+            });
+        }
 
-    function saving() {
-        /*input 데이터 가져오기*/
-        let content = $("#content").val();
-        /*$("#file")[0]->input태그*/ /*.files -> length(갯수)*/
-        let file = $("#file")[0].files[0];
-        let form_data = new FormData();
-        /*파일 데이터가 있을경우 new FormData를 변수(form_data)에 대입하고 변수(form_data)를 input데이터를 append 해서 넣어줌*/
-        form_data.append("file_give", file);
-        form_data.append("content_give", content);
-        /*app.py /pictures api로 데이터를 보내주고 받아옴*/
-        $.ajax({
-            type: "POST",
-            url: "/pictures",
-            data: form_data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                alert(response['msg']);
-                window.location.reload();
-            },
-        });
-    }
-
-    {#<!-- =====DB에 완료===== -->#}
-</script>
+        {#<!-- =====DB에 완료===== -->#}
+    </script>
 </body>
 </html>
