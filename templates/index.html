@@ -64,11 +64,16 @@
     <main class="main">
         <div class="slide-box">
             <div class="swiper mySwiper">
+                <!-- 일권 사진 받아오는 부분 -->
+                {% for pictures in diaries %}
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><a href="#"></a></div>
-                    <div class="swiper-slide"><a href="#"></a></div>
-                    <div class="swiper-slide"><a href="#"></a></div>
+                    <div class="swiper-slide">
+                        <img class="card-img-top" src= {{ url_for('static', filename = pictures.file) }}>
+                    </div>
                 </div>
+                <div class="swiper-pagination"></div>
+                {% endfor %}
+                <!-- 일권 사진 받아오는 부분 끝 -->
                 <div class="swiper-pagination"></div>
             </div>
         </div>
