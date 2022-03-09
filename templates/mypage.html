@@ -49,10 +49,10 @@
     <script>
       $(document).ready(function () {
 
-          {#나의 페이지 입장시 내 다이어리 활성화#}
+          // 나의 페이지 입장시 내 다이어리 활성화
           show_diarys()
 
-          {#아이디에 따른 함수 호출#}
+          // 아이디에 따른 함수 호출
           $('a[data-toggle="pill"]').on('show.bs.tab', function (e) {
               if(this.id == 'my_diary')
                   show_diarys()
@@ -62,9 +62,9 @@
       })
 
 
-      {#다이어리 보여주기#}
+      // 다이어리 보여주기
       function show_diarys() {
-          {#그려진 다이어리 제거#}
+          // 그려진 다이어리 제거
           $('#my_link').empty()
           $('#list_link').empty()
 
@@ -74,18 +74,21 @@
               data: {},
               success: function (response) {
                   let rows = response['diaries']
-                  {#console.log(response)#}
-                  {#다이어리 전체 검색#}
+                  // console.log(response)
+                  // 다이어리 전체 검색
                   for (let i = 0; i < rows.length; i++) {
 
-                      {#내가 쓴 글이면 추가#}
+                      // 내가 쓴 글이면 추가
                       if (document.getElementById("user_name").innerText == rows[i]['username']) {
                           let img = rows[i]['file']
                           let content = rows[i]['content']
 
-                          let temp_html = `<div class="tab-my-write col-md">
-                                      <img class="room-img" src="../static/${img}">
-                                      <p class="room-title">${content}</p>
+                          let temp_html = `<div id="room_content" class="tab-my-write">
+                                      <img id="room_img_id" class="room-img" src="../static/${img}">
+                                      <div id="comment_del" class="row">
+                                          <p class="room-comment">${content}</p>
+                                          <button class="btn btn-danger del_btn" onclick="del_diary(this)">🗑</button>
+                                      </div>
                                   </div>`
 
                           $('#my_link').append(temp_html)
@@ -95,7 +98,30 @@
           })
       }
 
-      {#좋아요 리스트#}
+      function del_diary(cur_tag) {
+          let res = confirm('삭제할까요?')
+
+          if (res == true) {
+              let mypicture = $(cur_tag).parent('#comment_del').parent('#room_content').children('#room_img_id').attr('src');
+
+              //console.log(mypicture)
+
+              $.ajax({
+                  type: "POST",
+                  url: "/picturesToMypage",
+                  data: {
+                      picture_give: mypicture
+                  },
+                  success: function (response) {
+                      window.location.reload();
+                  }
+              });
+          } else {
+              return
+          }
+      }
+
+      // 좋아요 리스트
       function like_list() {
           $('#my_link').empty()
           $('#list_link').empty()
@@ -105,7 +131,7 @@
               url: "/",
               data: {},
               success: function (response) {
-                  {#console.log(response)#}
+                  // console.log(response)
               }
           })
       }
@@ -130,13 +156,13 @@
       </header>
       <!-- 네비게이션 끝 -->
 
-      {# 마이페이지 시작#}
+<!--       마이페이지 시작-->
       <div class="mypage-center">
         😏 <span id="user_name">{{ user_info['username'] }}</span>님의
         마이페이지 🥰
       </div>
 
-      {# 목록 버튼#}
+<!--       목록 버튼-->
       <ul class="mypage-nav nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item">
           <a
@@ -163,10 +189,10 @@
           >
         </li>
       </ul>
-      {# 목록 내용#}
+<!--       목록 내용-->
       <div class="mypage-nav_list" id="contents-list">
         <div
-          class="tab-pane row show active"
+          class="tab-pane my_diary_class"
           id="my_link"
           role="tabpanel"
           aria-labelledby="my_diary"
@@ -179,7 +205,7 @@
         ></div>
       </div>
     </div>
-    {# 마이페이지 끝#}
+<!--     마이페이지 끝-->
 
     <script></script>
   </body>
