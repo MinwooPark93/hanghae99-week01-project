@@ -1,8 +1,8 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from pymongo import MongoClient
 import jwt
-import datetime
 import hashlib
+import certifi
 # import base64
 # import json
 from werkzeug.utils import secure_filename
@@ -15,19 +15,21 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'Hanghae99team10project'
 
+ca = certifi.where()
 
-client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority",tlsCAFile=ca)
 db = client.shareroom
 
 
 @app.route('/')
 def home():
+    diaries = list(db.pictures.find({}, {'_id': False}))
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         print(payload)
-        return render_template('index.html', user_info=user_info)
+        return render_template('index.html', user_info=user_info, diaries=diaries)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -145,10 +147,25 @@ def check_dup():
 # 병윤님 섹션 추가
 ######################################################################################
 
-@app.route('/detail', methods=['GET'])
+@app.route('/pictures')
+def review_home():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 여기가 문제였군
+        return render_template('index.html', diaries = list(db.pictures.find({}, {'_id': False}))
+)
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", token_expired="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login"))
+
+
+@app.route('/pictures', methods=['GET'])
 def show_pictures():
     diaries = list(db.pictures.find({}, {'_id': False}))
-    # print(diaries)
+    print(diaries)
     return render_template('index.html', diaries=diaries)
 
 
@@ -192,5 +209,4 @@ def save_pictures():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-
 
