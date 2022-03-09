@@ -116,10 +116,10 @@ def review_home():
         return redirect(url_for("login"))
 
 
-@app.route('/pictures', methods=['GET'])
-def show_pictures():
-    diaries = list(db.pictures.find({}, {'_id': False}))
-    return render_template('index.html', diaries=diaries)
+# @app.route('/pictures', methods=['GET'])
+# def show_pictures():
+#     diaries = list(db.pictures.find({}, {'_id': False}))
+#     return render_template('index.html', diaries=diaries)
 
 
 @app.route('/pictures', methods=['POST'])

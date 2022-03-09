@@ -1,0 +1,62 @@
+.mypage-center {
+    width: 60%;
+    height: 120px;
+
+    margin: 50px auto;
+    padding-top: 40px;
+    font-size: 50px;
+    text-align: center;
+}
+
+
+.mypage-nav {
+    margin: 20px 180px;
+}
+
+.mypage-nav_list {
+    border: 2px solid darkgrey;
+    margin: 0 160px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    min-width: 250px;
+}
+
+.nav-link {
+    font-size: 24px;
+}
+
+.my_diary_class {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tab-my-write {
+    margin: 10px 40px;
+}
+
+.room-img {
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+}
+
+.room-comment {
+    height: 40px;
+    width: 150px;
+    border-radius: 6px;
+    background-color: dimgrey;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 10px 0 0 15px;
+    padding: 8px 5px 0 5px;
+}
+
+.del_btn {
+    height: 40px;
+    width: 40px;
+    margin: 10px 0 0 10px;
+    font-size: 20px;
+}
