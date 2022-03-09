@@ -7,9 +7,13 @@
     <link rel="stylesheet" href="../static/css/style.css"/>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
+    <!-- page slide -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
     <title>Document</title>
     <script>
         $(document).ready(function () {
@@ -37,15 +41,39 @@
     <!-- 네비게이션 끝 -->
     <!-- 메인 (슬라이드, 사진상위노출) -->
     <main class="main">
-        <div id="slide" class="slide"></div>
-        <div>
-            <button class="openBtn">내 방 자랑하기</button>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><a href="#"></a></div>
+                <div class="swiper-slide"><a href="#"></a></div>
+                <div class="swiper-slide"><a href="#"></a></div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+
         </div>
+        <button class="openBtn">내 방 자랑하기</button>
         <div class="picture-list">
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
+            <div class="row">
+                <div>
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                </div>
+                <div>
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                </div>
+                <div>
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                </div>
+            </div>
         </div>
         <!-- =====모달 섹션시작===== -->
 
@@ -71,8 +99,13 @@
     </main>
     <!-- 메인 (슬라이드, 사진상위노출) -->
     <!-- footer copyright -->
-    <footer class="footer">copyright</footer>
-    <!-- footer copyright 끝 -->
+    <footer class="footer">
+        <p>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+            <br>
+            이거 하나 하려다가 조원 다들 혈압올라 쓰러질뻔
+        </p>
+    </footer>    <!-- footer copyright 끝 -->
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 <script>
@@ -127,6 +160,25 @@
 
     {#<!-- =====DB에 완료===== -->#}
 
+</script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
 </script>
 </body>
 </html>

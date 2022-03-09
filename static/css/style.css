@@ -3,60 +3,128 @@
 @import url(modal.css);
 
 * {
-  font-family: 'Hi Melody', cursive;
+    font-family: 'Hi Melody', cursive;
 }
 
 .wrap {
 }
 
 header {
-  width: 100vw;
-  height: 50px;
-  border: 1px solid red;
+    width: 100vw;
+    height: 50px;
+    border: 1px solid red;
 }
 
 .nav-bar {
-  width: 100%;
-  height: 50px;
-  background-color: gold;
+    width: 100%;
+    height: 50px;
+    background-color: gold;
+    text-decoration: none;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
 }
 
 .nav-bar_first-box {
-  width: 50px;
-  height: 50px;
-  background-color: white;
+     margin: 20px;
+    background-color: white;
+}
+
+.nav-bar_second-box {
+    margin: 20px;
+    background-color: white;
 }
 
 .main {
-  width: 100vw;
-  height: 80vh;
+    width: 100vw;
+    height: 80vh;
 }
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
-  height: 50px;
+    position: absolute;
+    bottom: -100%;
+    text-align: center;
+    width: 100vw;
+    height: 50px;
 
-  background-color: green;
+    background-color: green;
 }
 
 .slide {
-  width: 100%;
-  height: 300px;
+    width: 100%;
+    height: 300px;
 
-  border: 1px solid red;
+    border: 1px solid red;
+}
+
+.openBtn{
+    font-size: 20px;
+    margin-left: 300px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+}
+
+.openBtn:hover{
+    background-color: gray;
+}
+
+.nav-button:hover {
+    background-color: red;
+    color: gold;
+}
+
+.swiper {
+    width: 60%;
+    height: 30%;
+    margin-bottom: 200px;
+
+}
+
+.swiper-slide {
+    text-align: center;
+    background: red;
+    margin-top: 10px;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    margin-top: 100px;
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
 }
 
 .picture-list {
-  margin: auto;
-  width: 80%;
-  height: 700px;
+    margin: auto;
+    width: 80%;
+    height: 700px;
+    display: flex;
 
-  border: 1px solid red;
+    flex-direction: row;
+    vertical-align: center;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    justify-content: space-evenly;
+    border-radius: 50px;
+
+    border: 1px solid red;
 }
