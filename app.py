@@ -234,10 +234,14 @@ def del_pictures():
 
     file = f'static/{picture_div[2]}'
 
-    os.remove(file)
+    file_exist = os.path.exists(file)
 
-    # pictures = list(db.pictures.find({'file': a[2]}, {'_id': False}))
-    db.pictures.delete_one({'file': picture_div[2]})
+    if file_exist:
+        os.remove(file)
+        db.pictures.delete_one({'file': picture_div[2]})
+    else:
+        db.pictures.delete_one({'file': picture_div[2]})
+
     # print(pictures)
 
     return jsonify({'result': 'success'})
