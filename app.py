@@ -1,8 +1,8 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from pymongo import MongoClient
 import jwt
-import datetime
 import hashlib
+import certifi
 # import base64
 # import json
 from werkzeug.utils import secure_filename
@@ -15,24 +15,25 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'Hanghae99team10project'
 
+ca = certifi.where()
 
-client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority",tlsCAFile=ca)
 db = client.shareroom
 
 
 @app.route('/')
 def home():
+    diaries = list(db.pictures.find({}, {'_id': False}))
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         print(payload)
-        return render_template('index.html', user_info=user_info)
+        return render_template('index.html', user_info=user_info, diaries=diaries)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
 
 @app.route('/login')
 def login():
@@ -145,11 +146,37 @@ def check_dup():
 # 병윤님 섹션 추가
 ######################################################################################
 
-@app.route('/detail', methods=['GET'])
-def show_pictures():
-    diaries = list(db.pictures.find({}, {'_id': False}))
-    # print(diaries)
-    return render_template('index.html', diaries=diaries)
+@app.route('/pictures')
+def review_home():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 여기가 문제였군
+        return render_template('index.html', diaries = list(db.pictures.find({}, {'_id': False}))
+)
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", token_expired="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login"))
+
+
+# @app.route('/pictures', methods=['GET'])
+# def show_pictures():
+#     diaries = list(db.pictures.find({}, {'_id': False}))
+#     return render_template('index.html', diaries=diaries)
+
+# @app.route('/pictures', methods=['GET'])
+# def show_pictures():
+#     token_receive = request.cookies.get('mytoken')
+#     try:
+#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+#         posts = list(db.pictures.find({}).sort("date",1).limit(12))
+#         for posts in posts:
+#             posts["_id"] = str(posts["_id"])
+#         return jsonify({"result": "success", "msg":"포스팅을 가져왔습니다", "posts":posts})
+#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+#         return redirect(url_for("home"))
 
 
 @app.route('/pictures', methods=['POST'])
@@ -168,6 +195,7 @@ def save_pictures():
         # datetime 클래스로 현재 날짜와시간 만들어줌 -> 현재 시각을 출력하는 now() 메서드
         today = datetime.now()
         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+        count = len(user_info)
 
         filename = f'file-{mytime}'
         # 파일에 시간붙여서 static폴더에 filename 으로 저장
@@ -179,18 +207,38 @@ def save_pictures():
             'profile_name':user_info["profile_name"],
             'content': content_receive,
             'file': f'{filename}.{extension}',
-            'time': today.strftime('%Y.%m.%d')
+            'time': today.strftime('%Y.%m.%d'),
+            'num': count
         }
         # pictures collection에 저장
         db.pictures.insert_one(doc)
-
+        print(doc)
         return jsonify({'msg': '저장 완료!'})
     except(jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
 ######################################################################################
+######################################################################################
+
+
+# mypage link-test
+@app.route('/mypage')
+def mypage():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.users.find_one({"username": payload["id"]})
+    return render_template('mypage.html', user_info=user_info)
+
+
+# mypage ajax-GET-/pictures
+@app.route('/picturesToMypage', methods=['GET'])
+def load_pictures():
+    diaries = list(db.pictures.find({}, {'_id': False}))
+    return jsonify({'diaries': diaries})
+
+######################################################################################
+######################################################################################
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-
 
