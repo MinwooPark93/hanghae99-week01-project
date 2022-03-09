@@ -4,24 +4,29 @@
     font-size: 60px;
     font-family: 'Hi Melody', cursive;
     color: #444444;
-    text-shadow: 0 0 3px  #96dfce;
-    margin: 40px auto 0 auto;
+    text-shadow: 0 0 1px  black;
+    margin: 100px auto 0 auto;
 }
 
 .section {
-    background-color: #96dfce;
+    position: absolute;
+    width: 100vw;
+     top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #444444;
 }
 
 .button.is-sparta {
-    background-color: #96dfce;
+    background-color: #444444;
     border-color: transparent;
     color: #fff !important;
 }
 
 .button.is-sparta.is-outlined {
     background-color: transparent;
-    border-color: #96dfce;
-    color: #96dfce !important;
+    border-color: #444444;
+    color: #444444 !important;
 }
 
 .help {

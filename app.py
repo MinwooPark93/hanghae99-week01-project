@@ -3,9 +3,7 @@ from pymongo import MongoClient
 import jwt
 import hashlib
 import certifi
-# import base64
-# import json
-from werkzeug.utils import secure_filename
+
 from datetime import datetime, timedelta
 
 
