@@ -1,5 +1,6 @@
 .modal {
   position: fixed;
+  z-index: 9999;
   top: 0;
   left: 0;
   width: 100%;
@@ -30,7 +31,8 @@
   overflow: hidden;
   background-color: #96dfce;
   box-shadow: 5px 10px 10px 1px rgba(0,0,0,.3);
-  border: 1px solid red;
+
+  overflow: hidden;
 }
 
 .modalBox-head{
@@ -43,6 +45,9 @@
   font-size: xx-large;
   border-bottom: 3px solid white;
   margin-bottom: 10px;
+  background-color: white;
+
+  transform: translateY(-10px);
 }
 
 .modalBox-body{

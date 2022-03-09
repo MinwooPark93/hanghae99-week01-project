@@ -50,19 +50,18 @@
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-pagination"></div>
-
         </div>
         <button class="openBtn">내 방 자랑하기</button>
         <div class="picture-list" id="cards-box">
             <div class="row">
                 {% for pictures in diaries %}
-                <div class="card">
-                    <img class="card-img-top" src={{ url_for( 'static', filename = pictures.file) }}/>
-                    <div class="card-body">
-                        <p class="card-text">{{ pictures.content }}</p>
+                    <div class="card">
+                        <img class="card-img-top" src={{ url_for( 'static', filename = pictures.file) }}/>
+                        <div class="card-body">
+                            <p class="card-text">{{ pictures.content }}</p>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
             </div>
         </div>
         <!-- =====모달 섹션시작===== -->
@@ -75,23 +74,24 @@
                         오서오'쉐어'
                     </span>
                 </div>
-                <div class="modalBox-body">
-                    <div class="input-group mb-3">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="file"/>
-                        </div>
-                    </div>
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="content"
-                        style="resize:none"></textarea>
+
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="file"/>
                     </div>
                 </div>
+                <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="content"
+                                  style="resize:none"></textarea>
+                </div>
+
                 <div class="btn-group">
                     <button onclick="saving()" type="button" class="btn btn-primary btn-radius">
                         저장하기
                     </button>
                     <button class="closeBtn btn-radius">닫기</button>
                 </div>
+            </div>
         </div>
         <!-- =====모달 섹션 끝===== -->
     </main>
@@ -158,7 +158,6 @@
             }
         });
     }
-
 
 
     function saving() {
