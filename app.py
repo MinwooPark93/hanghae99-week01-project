@@ -3,8 +3,7 @@ from pymongo import MongoClient
 import jwt
 import hashlib
 import certifi
-# import base64
-# import json
+import os
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
@@ -28,7 +27,6 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        print(payload)
         return render_template('index.html', user_info=user_info, diaries=diaries)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -98,50 +96,6 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-
-# @app.route('/update_profile', methods=['POST'])
-# def save_img():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         # 프로필 업데이트
-#         return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
-#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-#         return redirect(url_for("home"))
-#
-#
-# @app.route('/posting', methods=['POST'])
-# def posting():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         # 포스팅하기
-#         return jsonify({"result": "success", 'msg': '포스팅 성공'})
-#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-#         return redirect(url_for("home"))
-#
-#
-# @app.route("/get_posts", methods=['GET'])
-# def get_posts():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         # 포스팅 목록 받아오기
-#         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다."})
-#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-#         return redirect(url_for("home"))
-#
-#
-# @app.route('/update_like', methods=['POST'])
-# def update_like():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         # 좋아요 수 변경
-#         return jsonify({"result": "success", 'msg': 'updated'})
-#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-#         return redirect(url_for("home"))
-
 ######################################################################################
 # 병윤님 섹션 추가
 ######################################################################################
@@ -151,7 +105,7 @@ def review_home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        # 여기가 문제였군
+
         return render_template('index.html', diaries = list(db.pictures.find({}, {'_id': False}))
 )
 
@@ -165,18 +119,6 @@ def review_home():
 # def show_pictures():
 #     diaries = list(db.pictures.find({}, {'_id': False}))
 #     return render_template('index.html', diaries=diaries)
-
-# @app.route('/pictures', methods=['GET'])
-# def show_pictures():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         posts = list(db.pictures.find({}).sort("date",1).limit(12))
-#         for posts in posts:
-#             posts["_id"] = str(posts["_id"])
-#         return jsonify({"result": "success", "msg":"포스팅을 가져왔습니다", "posts":posts})
-#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-#         return redirect(url_for("home"))
 
 
 @app.route('/pictures', methods=['POST'])
@@ -235,6 +177,23 @@ def mypage():
 def load_pictures():
     diaries = list(db.pictures.find({}, {'_id': False}))
     return jsonify({'diaries': diaries})
+
+# mypage ajax-POST-/pictures-delete
+@app.route('/picturesToMypage', methods=['POST'])
+def del_pictures():
+    picture = request.form['picture_give']
+
+    picture_div = picture.split('/')
+
+    file = f'static/{picture_div[2]}'
+
+    os.remove(file)
+
+    # pictures = list(db.pictures.find({'file': a[2]}, {'_id': False}))
+    db.pictures.delete_one({'file': picture_div[2]})
+    # print(pictures)
+
+    return jsonify({'result': 'success'})
 
 ######################################################################################
 ######################################################################################
