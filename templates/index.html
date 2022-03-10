@@ -4,7 +4,10 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+    <meta property="og:title" content="어서오'쉐어'">
+    <meta property="og:image" content="http://13.209.89.104/static/file-2022-03-10-07-00-53.jpg">
+    <meta property="og:description"
+          content=" 코로나 3년! 집돌이, 집순이들의 방자랑하기! 나와 다른사람들의 방이 어떻게 꾸며졌나 공유하고 자랑해보자! 어서오'쉐어'는 우리들의 방을 꾸미고 자랑하는 방스타그램같은 페이지 입니다 :)">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
     <!-- page slide -->
@@ -67,11 +70,11 @@
                 <div class="swiper-wrapper">
                     <!-- 일권 사진 받아오는 부분 -->
                     {% for pictures in diaries %}
-                    {% if loop.index <=3 %}
-                        <div class="swiper-slide">
-                            <img class="card-img-top" src= {{ url_for('static', filename = pictures.file) }}>
-                        </div>
-                    {% endif %}
+                        {% if loop.index <=3 %}
+                            <div class="swiper-slide">
+                                <img class="card-img-top" src= {{ url_for('static', filename = pictures.file) }}>
+                            </div>
+                        {% endif %}
                     {% endfor %}
                     <!-- 일권 사진 받아오는 부분 끝 -->
                 </div>
