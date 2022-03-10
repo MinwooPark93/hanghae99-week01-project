@@ -6,34 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="365a27a6-a342-4410-8e7e-facb96279c1f" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/modal.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/mypage.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/mypage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-15-51-58.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-15-53-03.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-16-43-41.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-16-54-27.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-17-05-37.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-17-09-59.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-17-14-08.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-17-56-02.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-18-01-31.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-18-51-05.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-18-59-31.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-20-42-28.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-20-57-19.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-21-00-40.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-21-03-29.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-23-39-53.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-23-40-28.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-08-23-40-41.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-09-00-15-16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-09-21-21-02.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-09-21-23-17.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-10-01-43-58.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/file-2022-03-10-09-02-12.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/mypage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mypage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,6 +130,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/hanghae99_week01_project$app.coverage" NAME="app 커버리지 결과" MODIFIED="1646872834041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/hanghae99_week01_project$app.coverage" NAME="app 커버리지 결과" MODIFIED="1646893893326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
