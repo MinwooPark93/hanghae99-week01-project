@@ -1,62 +1,12 @@
 @import url(reset.css);
 @import url(login.css);
 @import url(modal.css);
+@import url(navbar.css);
+@import url(mypage.css);
+@import url(index.css);
 
-* {
-  font-family: 'Hi Melody', cursive;
+body {
+  overflow-x: hidden;
 }
 
-.wrap {
-}
 
-header {
-  width: 100vw;
-  height: 50px;
-  border: 1px solid red;
-}
-
-.nav-bar {
-  width: 100%;
-  height: 50px;
-  background-color: gold;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-bar_first-box {
-  width: 50px;
-  height: 50px;
-  background-color: white;
-}
-
-.main {
-  width: 100vw;
-  height: 80vh;
-}
-
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
-  height: 50px;
-
-  background-color: green;
-}
-
-.slide {
-  width: 100%;
-  height: 300px;
-
-  border: 1px solid red;
-}
-
-.picture-list {
-  margin: auto;
-  width: 80%;
-  height: 700px;
-
-  border: 1px solid red;
-}

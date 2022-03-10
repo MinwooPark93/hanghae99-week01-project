@@ -4,13 +4,35 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="../static/css/style.css"/>
+
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
+    <!-- page slide -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+
+
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- Bootstrap JS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <!-- project main CSS -->
+    <link rel="stylesheet" href="../static/css/style.css"/>
+
     <title>Document</title>
+    <script>
+        $(document).ready(function () {
+            $('#logout_btn').click(function () {
+                $.removeCookie("mytoken", {path: '/'});
+                alert('로그아웃 되었습니다.')
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="wrap">
@@ -18,81 +40,107 @@
     <header>
         <div class="nav-bar">
             <div class="nav-bar_first-box">
-                <a href="#">홈</a>
+                <a href="/">어서오'쉐어'</a>
             </div>
             <div class="nav-bar_second-box">
-                <a href="/login">로그인</a>
-                <a href="#">마이페이지</a>
+                <a href="/">홈</a>
+                <a href="/login" id="logout_btn">로그아웃</a>
+                <a href="/mypage">마이페이지</a>
             </div>
         </div>
     </header>
+    <div class="below-nav-img">
+        <h1 class="pageInfo">"코로나 3년! 집돌이, 집순이들의 방자랑하기<br>
+            나와 다른사람들의 방이 어떻게 꾸며졌나 공유하고 자랑해보자!<br>
+            어서오'쉐어'는 우리들의 방을 꾸미고 자랑하는 방스타그램같은 페이지 입니다 :)"</h1>
+        <button type="button" class="btn btn-primary posting-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@getbootstrap">
+            내 방 자랑하기
+        </button>
+
+    </div>
     <!-- 네비게이션 끝 -->
     <!-- 메인 (슬라이드, 사진상위노출) -->
     <main class="main">
-        <div id="slide" class="slide"></div>
-        <div>
-            <button class="openBtn">내 방 자랑하기</button>
+        <div class="slide-box">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <!-- 일권 사진 받아오는 부분 -->
+                    {% for pictures in diaries %}
+                    {% if loop.index <=3 %}
+                        <div class="swiper-slide">
+                            <img class="card-img-top" src= {{ url_for('static', filename = pictures.file) }}>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                    <!-- 일권 사진 받아오는 부분 끝 -->
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
         </div>
-        <div class="picture-list">
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
+        <div class="picture-list mycards">
+            <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+                {% for pictures in diaries %}
+                    <div class="col">
+                        <div class="card h-100">
+                            <img class="card-img-top" src={{ url_for( 'static', filename = pictures.file) }}>
+                            <div class="card-body">
+                                <p class="card-text">{{ pictures.content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
         <!-- =====모달 섹션시작===== -->
-
-        <div class="modal hidden">
-            <div class="bg"></div>
-            <div class="modalBox">
-                <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="file"/>
-                        <label class="custom-file-label" for="file">사진 선택하기</label>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            어서오'쉐어'</h5>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="input-group mb-3">
+                                <input type="file"
+                                       class="form-control"
+                                       id="file">
+                                <label class="input-group-text"
+                                       for="inputGroupFile02">Upload</label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text"
+                                       class="col-form-label">Message:</label>
+                                <textarea
+                                        class="form-control"
+                                        id="content"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button onclick="saving()"
+                                type="button"
+                                class="btn btn-primary">
+                            Save
+                        </button>
                     </div>
                 </div>
-                <div class="form-floating">
-              <textarea class="form-control" placeholder="Leave a comment here" id="content"
-                        style="resize:none"></textarea>
-                </div>
-                <button onclick="saving()" type="button" class="btn btn-primary">
-                    저장하기
-                </button>
             </div>
         </div>
         <!-- =====모달 섹션 끝===== -->
     </main>
-    <!-- 메인 (슬라이드, 사진상위노출) -->
-    <!-- footer copyright -->
-    <footer class="footer">copyright</footer>
-    <!-- footer copyright 끝 -->
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 <script>
-    $(document).ready(function () {
-        bsCustomFileInput.init();
-        listing();
-    });
-
-    {#<!-- =====모달 JS===== -->#}
-    const open = () => {
-        document.querySelector(".modal").classList.remove("hidden");
-    }
-
-    const close = () => {
-        document.querySelector(".modal").classList.add("hidden");
-    }
-
-    document.querySelector(".openBtn").addEventListener("click", open);
-    document.querySelector(".closeBtn").addEventListener("click", close);
-    document.querySelector(".bg").addEventListener("click", close);
-    document.querySelector("#sendButton").addEventListener('click', () => {
-        {#let selectFile = document.querySelector("#inputImage").files[0];#}
-        {#const file = URL.createObjectURL(selectFile);#}
-        {#document.querySelector(".uploadImage").src = file;#}
-    })
-    {#<!-- =====모달 JS 끝===== -->#}
-    {#<!-- =====DB에 저장===== -->#}
-
     function saving() {
         /*input 데이터 가져오기*/
         let content = $("#content").val();
@@ -117,7 +165,23 @@
         });
     }
 
-    {#<!-- =====DB에 완료===== -->#}
+    // =====DB에 완료=====
+
+</script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
 </script>
 </body>
 </html>

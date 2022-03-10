@@ -1,10 +1,9 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from pymongo import MongoClient
 import jwt
-import datetime
 import hashlib
-# import base64
-# import json
+import certifi
+import os
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
@@ -15,19 +14,20 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'Hanghae99team10project'
 
+ca = certifi.where()
 
-client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority",tlsCAFile=ca)
 db = client.shareroom
 
 
 @app.route('/')
 def home():
+    diaries = list(db.pictures.find({}, {'_id': False}))
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        print(payload)
-        return render_template('index.html', user_info=user_info)
+        return render_template('index.html', user_info=user_info, diaries=diaries)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -97,59 +97,29 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-
-# @app.route('/update_profile', methods=['POST'])
-# def save_img():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         # 프로필 업데이트
-#         return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
-#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-#         return redirect(url_for("home"))
-#
-#
-# @app.route('/posting', methods=['POST'])
-# def posting():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         # 포스팅하기
-#         return jsonify({"result": "success", 'msg': '포스팅 성공'})
-#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-#         return redirect(url_for("home"))
-#
-#
-# @app.route("/get_posts", methods=['GET'])
-# def get_posts():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         # 포스팅 목록 받아오기
-#         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다."})
-#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-#         return redirect(url_for("home"))
-#
-#
-# @app.route('/update_like', methods=['POST'])
-# def update_like():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         # 좋아요 수 변경
-#         return jsonify({"result": "success", 'msg': 'updated'})
-#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-#         return redirect(url_for("home"))
-
 ######################################################################################
 # 병윤님 섹션 추가
 ######################################################################################
 
-@app.route('/detail', methods=['GET'])
-def show_pictures():
-    diaries = list(db.pictures.find({}, {'_id': False}))
-    # print(diaries)
-    return render_template('index.html', diaries=diaries)
+@app.route('/pictures')
+def review_home():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+
+        return render_template('index.html', diaries = list(db.pictures.find({}, {'_id': False}))
+)
+
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", token_expired="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login"))
+
+
+# @app.route('/pictures', methods=['GET'])
+# def show_pictures():
+#     diaries = list(db.pictures.find({}, {'_id': False}))
+#     return render_template('index.html', diaries=diaries)
 
 
 @app.route('/pictures', methods=['POST'])
@@ -189,8 +159,44 @@ def save_pictures():
         return redirect(url_for("home"))
 
 ######################################################################################
+######################################################################################
+
+
+# mypage link-test
+@app.route('/mypage')
+def mypage():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    user_info = db.users.find_one({"username": payload["id"]})
+    return render_template('mypage.html', user_info=user_info)
+
+
+# mypage ajax-GET-/pictures
+@app.route('/picturesToMypage', methods=['GET'])
+def load_pictures():
+    diaries = list(db.pictures.find({}, {'_id': False}))
+    return jsonify({'diaries': diaries})
+
+# mypage ajax-POST-/pictures-delete
+@app.route('/picturesToMypage', methods=['POST'])
+def del_pictures():
+    picture = request.form['picture_give']
+
+    picture_div = picture.split('/')
+
+    file = f'static/{picture_div[2]}'
+
+    os.remove(file)
+
+    # pictures = list(db.pictures.find({'file': a[2]}, {'_id': False}))
+    db.pictures.delete_one({'file': picture_div[2]})
+    # print(pictures)
+
+    return jsonify({'result': 'success'})
+
+######################################################################################
+######################################################################################
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-
 
