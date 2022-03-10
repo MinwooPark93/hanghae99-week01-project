@@ -83,13 +83,15 @@
                             let img = rows[i]['file']
                             let content = rows[i]['content']
 
-                            let temp_html = `<div id="room_content" class="tab-my-write">
-                                      <img id="room_img_id" class="room-img" src="../static/${img}">
-                                      <div id="comment_del" class="row">
-                                          <p class="room-comment">${content}</p>
-                                          <button class="btn btn-danger del_btn" onclick="del_diary(this)">🗑</button>
-                                      </div>
-                                  </div>`
+                            let temp_html = `<div class="mypage-cards">
+                                                 <div id="room_content" class="tab-my-write">
+                                                     <img id="room_img_id" class="room-img" src="../static/${img}">
+                                                     <p class="room-comment">${content}</p>
+                                                 </div>
+                                                 <div id="comment_del" class="row">
+                                                    <button class="btn btn-danger del_btn" onclick="del_diary(this)">삭제하기 🗑</button>
+                                                 </div>
+                                             </div>`
 
                             $('#my_link').append(temp_html)
                         }
@@ -102,7 +104,7 @@
             let res = confirm('삭제할까요?')
 
             if (res == true) {
-                let mypicture = $(cur_tag).parent('#comment_del').parent('#room_content').children('#room_img_id').attr('src');
+                let mypicture = $(cur_tag).parent('#comment_del').prev('#room_content').children('#room_img_id').attr('src');
                 //console.log(mypicture)
 
                 $.ajax({
