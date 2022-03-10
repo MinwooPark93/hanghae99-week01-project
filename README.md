@@ -46,21 +46,28 @@ deploy
 --------------
 
 
-## 3. S.A (Starting Assignment)
+## 3. 어서오'쉐어' 링크
+
+* <http://codefeed.shop/login>
+
+--------------
+
+
+## 4. S.A (Starting Assignment)
 
 * 블로그 S.A 링크: <https://codefeed.tistory.com/24>
 
 --------------
 
 
-## 4. 실행화면 링크
+## 5. 실행화면 링크
 
 * 시연 영상 링크: <https://www.youtube.com/watch?v=5tzO5esJYwA>
 
 --------------
 
 
-## 5. 핵심기능
+## 6. 핵심기능
 
 * 회원가입, 로그인 & 로그아웃
 >* JWT를 사용, 로그인과 회원가입 기능 구현
@@ -76,7 +83,7 @@ deploy
 --------------
 
 
-## 6. Trouble shooting
+## 7. Trouble shooting
 
 >* 1. python3 decode(JWT 사용중 hash암호화 작업시)
 >>* 이슈 내용 : token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')에 의한 **INTERNAL SERVER ERROR** 발생
@@ -124,7 +131,7 @@ deploy
 --------------
 
 
-## 7. 개인 회고
+## 8. 개인 회고
 
 박민우: <>
 김일권: <>
