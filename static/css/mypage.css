@@ -17,7 +17,6 @@
     font-family: 'Hi Melody', cursive;
 }
 
-
 .mypage-nav {
     margin: 20px 180px;
 }
@@ -39,33 +38,55 @@
     flex-wrap: wrap;
 }
 
+.mypage-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
 .tab-my-write {
-    margin: 10px 40px;
+    position: relative;
+    margin: 0 40px;
+    overflow: hidden;
+}
+
+.room-comment {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    padding: 20px 10px 5px 10px;
+
+    transform: translateY(0);
+    transition: 0.5s ease-in-out;
+    background-color: rgba(255, 255, 255, 0.4);
+    /*height: 40px;*/
+    /*width: 150px;*/
+    /*border-radius: 6px;*/
+    /*background-color: dimgrey;*/
+    /*font-size: 20px;*/
+    /*color: white;*/
+    /*text-align: center;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*margin: 10px 0 0 15px;*/
+    /*padding: 8px 5px 0 5px;*/
+}
+.tab-my-write:hover .room-comment {
+    transform: translateY(-202px);
 }
 
 .room-img {
     height: 200px;
     width: 200px;
     border-radius: 10px;
-}
-
-.room-comment {
-    height: 40px;
-    width: 150px;
-    border-radius: 6px;
-    background-color: dimgrey;
-    font-size: 20px;
-    color: white;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 10px 0 0 15px;
-    padding: 8px 5px 0 5px;
+    object-fit: contain;
 }
 
 .del_btn {
-    height: 40px;
-    width: 40px;
-    margin: 10px 0 0 10px;
-    font-size: 20px;
+    text-align: center;
+    height: 30px;
+    margin: 10px 0 10px 0;
+    font-size: 14px;
 }
