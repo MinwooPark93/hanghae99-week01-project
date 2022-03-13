@@ -133,7 +133,7 @@ deploy
 
 ## 8. 개인 회고 ( 3 / 17 까지 개인 회고 블로그나 notion 링크 달아주세요 :) )
 
-박민우: <>
+박민우: <https://hickory-wave-70a.notion.site/WIL-Mini-project-Algorithm-76cf6621e1ad4f408c9e95899c08cf46>
 김일권: <>
-천은호: <>
+천은호: <https://saintrabby-t-story.tistory.com/4>
 조병윤: <>
