@@ -142,4 +142,4 @@ deploy
 천은호: <https://innate-cosmonaut-e53.notion.site/99_1-10d81fd01878450d88f808fc96fad114>
 
 
-조병윤: <>
+조병윤: <https://nunenistory.tistory.com/18>
