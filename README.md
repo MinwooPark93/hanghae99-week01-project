@@ -136,7 +136,7 @@ deploy
 박민우: <https://hickory-wave-70a.notion.site/WIL-Mini-project-Algorithm-76cf6621e1ad4f408c9e95899c08cf46>
 
 
-김일권: <>
+김일권: <https://velog.io/@jjems/%ED%95%AD%ED%95%B499-1%EC%A3%BC%EC%B0%A8-WIL>
 
 
 천은호: <https://innate-cosmonaut-e53.notion.site/99_1-10d81fd01878450d88f808fc96fad114>
