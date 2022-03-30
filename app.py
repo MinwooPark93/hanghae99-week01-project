@@ -12,11 +12,11 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
-SECRET_KEY = 'Hanghae99team10project'
+SECRET_KEY = ''
 
 ca = certifi.where()
 
-client = MongoClient("mongodb+srv://sharerooom:shareroom@cluster0.skz7o.mongodb.net/cluster0?retryWrites=true&w=majority",tlsCAFile=ca)
+client = MongoClient("",tlsCAFile=ca)
 db = client.shareroom
 
 
